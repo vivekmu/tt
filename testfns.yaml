@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: testfns
+  annotations:
+    field.cattle.io/containerDefaultResourceLimit: '{}'
+    field.cattle.io/projectId: c-f6dmz:p-7c2nh
+#    key: string
+  labels:
+    field.cattle.io/projectId: p-7c2nh
+
+
+#    key: string
+---
+# This network policy means:
+# Allow the shared namespace to access all pods 
+# labeld with gateway-pod.
+#kind: NetworkPolicy
+#apiVersion: networking.k8s.io/v1
+#metadata:
+#  name: shared-namespace-to-gateways
+#  namespace: kafka2nias
+#spec:
+#  podSelector:
+#    matchLabels:
+#      target: gateway
+#  ingress:
+#  - from:
+#    - namespaceSelector:
+#        matchLabels:
+#          purpose: gateway
+---
+# The ResourceQuota specifies the requests and limits for the whole namespace.
+# ResourceQuotas are currently disabled due to missing information about required resource per SCS.
+# apiVersion: v1
+# kind: ResourceQuota
+# metadata:
+#   name: namespace-quota
+#   namespace:  nexeed_kubernetes_namespace_name 
+# spec:
+#   hard:
+#     requests.cpu: " nexeed_kubernetes_namespace_requests_cpu "
+#     requests.memory: " nexeed_kubernetes_namespace_requests_memory "
+#     #
+#     # limits.cpu: " nexeed_kubernetes_namespace_limits_cpu "
+#     # limits.memory: " nexeed_kubernetes_namespace_limits_memory "
+#---
+
+# The LimitRange sets default limits and requests.
+# It ensures that pods can only provide resource specs in the defined range.
+#apiVersion: v1
+#kind: LimitRange
+#metadata:
+#  name: ns-limitrange
+#  namespace: testfns
+#spec:
+#  limits:
+#  - default:
+#      cpu: "100m"
+#      memory: "200"
+#    defaultRequest:
+#      cpu: "50m"
+#      memory: "100M"
+#    max:
+#      cpu: "500m"
+#      memory: "1Gi"
+#    type: Container
