@@ -1,0 +1,1 @@
+kubectl get pod -o json | jq -r '["Name","Phase","Containers","ReadyContainers"],(.items[] | [.metadata.name, .status.phase, (.spec.containers | length), (.status.containerStatuses[] | select(.ready==true) | [values] | length)]) | @csv'
